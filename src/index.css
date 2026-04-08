@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@theme {
+  /* Using the colors from your image */
+  --color-brand-navy: #00082d;
+  --color-brand-red: #be1622;
+  
+  /* Optional: Custom fonts or spacing if you like */
+  --font-display: "Inter", sans-serif;
+}
