@@ -146,13 +146,16 @@ const AboutUs: React.FC = () => {
             </motion.div>
 
             {/* Compact CTA link */}
-            <motion.div variants={fadeUp} className="mt-14">
-              {/* Changed from <button> to <Link> to connect to the dedicated About page */}
-              <Link to="/about" className="group flex items-center gap-4 text-white font-bold text-[11px] uppercase tracking-[0.3em] hover:text-[#be1622] transition-all w-fit">
+            {/* Compact CTA Button Box */}
+            <motion.div variants={fadeUp} className="mt-12 lg:mt-14">
+              <Link 
+                to="/about" 
+                className="inline-flex items-center justify-center gap-3 px-10 py-4 bg-white text-[#00082d] hover:bg-[#be1622] hover:text-white text-[11px] font-bold uppercase tracking-[0.2em] rounded-xl transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.2)] group w-full sm:w-auto"
+              >
                 Our Full History
-                <div className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center group-hover:border-[#be1622] group-hover:bg-[#be1622] shadow-xl transition-all">
-                  <svg className="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                </div>
+                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
               </Link>
             </motion.div>
           </motion.div>

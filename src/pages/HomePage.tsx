@@ -4,6 +4,7 @@ import Services from '../components/Services';
 import AboutUs from '../components/AboutUs';
 import Process from '../components/Process';
 import Testimonials from '../components/Testimonials';
+import CTASection from '../components/CTASection';
 
 const Home: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ const Home: React.FC = () => {
       <AboutUs />
       <Process />
       <Testimonials />
+      <CTASection />
     </main>
   );
 };
