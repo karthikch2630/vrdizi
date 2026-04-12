@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, type Variants } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { Award, ArrowRight } from 'lucide-react'; // Using Lucide icons
 import AboutIMG from "../assets/About-vrdizi.png"; // Ensure this image path is correct
 
 // --- Animation Variants ---
@@ -42,7 +43,8 @@ const imageReveal: Variants = {
 
 const AboutUs: React.FC = () => {
   return (
-    <section className="py-20 sm:py-28 bg-[#00082d] font-sans overflow-hidden px-4 sm:px-6">
+    /* SECTION PADDING: 80px (py-20) | Default Font: Inter */
+    <section className="py-20 bg-brand-navy font-inter overflow-hidden px-4 sm:px-6">
       <div className="container mx-auto max-w-7xl">
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
           
@@ -54,7 +56,7 @@ const AboutUs: React.FC = () => {
             viewport={{ once: true, margin: "-100px" }}
           >
             {/* Ambient Glow behind images to match Hero */}
-            <div className="absolute -top-20 -left-20 w-80 h-80 bg-[#be1622]/10 rounded-full blur-[100px] -z-10"></div>
+            <div className="absolute -top-20 -left-20 w-80 h-80 bg-brand-red/10 rounded-full blur-[100px] -z-10"></div>
             
             <div className="relative">
               {/* Main Image with Glassmorphic Border */}
@@ -69,14 +71,16 @@ const AboutUs: React.FC = () => {
               {/* Floating Dashboard Card (Experience) */}
               <motion.div 
                 variants={popIn} 
-                className="absolute -bottom-6 -right-2 sm:-right-8 bg-white/10 backdrop-blur-xl p-4 sm:p-6 rounded-2xl shadow-2xl border border-white/10 flex items-center gap-4 max-w-[260px] group cursor-default"
+                className="absolute -bottom-6 -right-2 sm:-right-8 bg-white/10 backdrop-blur-xl p-4 sm:p-6 rounded-2xl shadow-2xl border border-white/10 flex items-center gap-4 max-w-[280px] group cursor-default"
               >
-                <div className="w-12 h-12 rounded-xl bg-[#be1622] flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(190,22,34,0.4)]">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <div className="w-12 h-12 rounded-xl bg-brand-red flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(190,22,34,0.4)]">
+                  <Award className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <p className="text-2xl font-black text-white leading-none tracking-tighter">12+ Years</p>
-                  <p className="text-[9px] uppercase font-bold text-white/50 tracking-[0.2em] mt-1.5">Market Excellence</p>
+                  {/* Title: Poppins | 28px */}
+                  <p className="font-poppins text-2xl sm:text-[28px] font-semibold text-white leading-none tracking-tight">12+ Years</p>
+                  {/* Subtext: Inter | 14px (No less than 14px!) */}
+                  <p className="font-inter text-[14px] uppercase font-medium text-white/60 tracking-wider mt-2">Market Excellence</p>
                 </div>
               </motion.div>
             </div>
@@ -90,72 +94,62 @@ const AboutUs: React.FC = () => {
             viewport={{ once: true, margin: "-100px" }}
             variants={staggerContainer}
           >
-            <motion.div variants={fadeUp} className="inline-flex items-center gap-3 mb-6">
-              <span className="w-10 h-[1px] bg-[#be1622]"></span>
-              <span className="text-[#be1622] font-bold uppercase tracking-[0.4em] text-[10px]">VR Dizi Legacy</span>
+            <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6">
+              <span className="w-10 h-[1px] bg-brand-red"></span>
+              {/* Tag: Inter | 14px | 600 weight */}
+              <span className="font-inter text-brand-red font-semibold uppercase tracking-[0.3em] text-[14px]">
+                VR Dizi Legacy
+              </span>
             </motion.div>
 
-            <motion.h2 variants={fadeUp} className="text-4xl sm:text-5xl lg:text-6xl font-serif text-white mb-8 leading-[1.1] tracking-tight">
+            {/* Main Heading: Poppins | 44px | Line-height 1.3 */}
+            <motion.h2 variants={fadeUp} className="font-poppins text-3xl sm:text-4xl md:text-[44px] font-semibold text-white mb-6 leading-[1.3] tracking-tight">
               Redefining Trust in <br />
-              <span className="italic font-light text-white/40">Manpower Solutions.</span>
+              <span className="italic font-normal text-white/70">Manpower Solutions.</span>
             </motion.h2>
 
-            <motion.p variants={fadeUp} className="text-white/60 text-base sm:text-lg leading-relaxed mb-12 font-light max-w-xl">
+            {/* Paragraph: Inter | 17px | Line-height 1.7 */}
+            <motion.p variants={fadeUp} className="font-inter text-white/70 text-[16px] md:text-[17px] leading-[1.7] mb-12 font-normal max-w-xl">
               Founded on absolute reliability, <span className="text-white font-medium">VR Dizi</span> bridges the gap between skilled professionals and those who need them most. We treat every placement as a strategic partnership.
             </motion.p>
 
             {/* Trust Grid: Compact & Dashboard Aligned to match Services Section */}
-            <motion.div variants={fadeUp} className="grid grid-cols-2 gap-y-10 gap-x-6 border-t border-white/10 pt-10">
+            <motion.div variants={fadeUp} className="grid grid-cols-1 sm:grid-cols-2 gap-y-10 gap-x-6 border-t border-white/10 pt-10">
               
-              <div className="flex flex-col gap-2.5 group">
-                <span className="inline-flex bg-[#be1622]/10 text-[#be1622] text-[9px] font-bold px-2 py-0.5 rounded-sm uppercase self-start border border-[#be1622]/20">
-                  Mission
-                </span>
-                <p className="text-[13px] sm:text-sm text-white font-medium leading-snug tracking-tight">
-                  Providing secure, vetted, and dignified employment to thousands.
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-2.5 group">
-                <span className="inline-flex bg-white/5 text-white/50 text-[9px] font-bold px-2 py-0.5 rounded-sm uppercase self-start border border-white/10">
-                  Vision
-                </span>
-                <p className="text-[13px] sm:text-sm text-white/80 font-medium leading-snug tracking-tight">
-                  Global benchmark for ethical and transparent staffing.
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-2.5 group">
-                <span className="inline-flex bg-white/5 text-white/50 text-[9px] font-bold px-2 py-0.5 rounded-sm uppercase self-start border border-white/10">
-                  Integrity
-                </span>
-                <p className="text-[13px] sm:text-sm text-white/80 font-medium leading-snug tracking-tight">
-                  Zero hidden fees. 100% transparency in every contract.
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-2.5 group">
-                <span className="inline-flex bg-white/5 text-white/50 text-[9px] font-bold px-2 py-0.5 rounded-sm uppercase self-start border border-white/10">
-                  Support
-                </span>
-                <p className="text-[13px] sm:text-sm text-white/80 font-medium leading-snug tracking-tight">
-                  24/7 dedicated account managers for every client.
-                </p>
-              </div>
+              {/* Grid Items */}
+              {[
+                { title: "Mission", desc: "Providing secure, vetted, and dignified employment to thousands.", active: true },
+                { title: "Vision", desc: "Global benchmark for ethical and transparent staffing.", active: false },
+                { title: "Integrity", desc: "Zero hidden fees. 100% transparency in every contract.", active: false },
+                { title: "Support", desc: "24/7 dedicated account managers for every client.", active: false }
+              ].map((item, idx) => (
+                <div key={idx} className="flex flex-col gap-3 group">
+                  {/* Grid Tags: Inter | 14px */}
+                  <span className={`inline-flex font-inter text-[14px] font-semibold px-3 py-1 rounded-md uppercase self-start border backdrop-blur-md ${
+                    item.active 
+                      ? "bg-brand-red/10 text-brand-red border-brand-red/20" 
+                      : "bg-white/5 text-white/50 border-white/10"
+                  }`}>
+                    {item.title}
+                  </span>
+                  {/* Grid Descriptions: Inter | 14px | Line-height 1.7 */}
+                  <p className="font-inter text-[14px] text-white/80 font-normal leading-[1.7] max-w-[250px]">
+                    {item.desc}
+                  </p>
+                </div>
+              ))}
 
             </motion.div>
 
-            {/* Compact CTA link */}
             {/* Compact CTA Button Box */}
             <motion.div variants={fadeUp} className="mt-12 lg:mt-14">
+              {/* Button: Inter | 16px | Semi-bold (600) */}
               <Link 
                 to="/about" 
-                className="inline-flex items-center justify-center gap-3 px-10 py-4 bg-white text-[#00082d] hover:bg-[#be1622] hover:text-white text-[11px] font-bold uppercase tracking-[0.2em] rounded-xl transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.2)] group w-full sm:w-auto"
+                className="font-inter inline-flex items-center justify-center gap-3 px-10 py-4 bg-white text-brand-navy hover:bg-brand-red hover:text-white text-[16px] font-semibold rounded-xl transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.2)] group w-full sm:w-auto"
               >
                 Our Full History
-                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
               </Link>
             </motion.div>
           </motion.div>

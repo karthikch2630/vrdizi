@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, type Variants } from 'framer-motion';
+import { ArrowRight } from 'lucide-react'; // Using Lucide icon
 import ContactModal from './ContactModal';
 
 // --- Animation Variants ---
@@ -25,62 +26,64 @@ const CTASection: React.FC = () => {
 
   return (
     <>
-      <section className="py-16 sm:py-24 bg-white font-sans px-4 sm:px-6">
+      {/* SECTION PADDING: 80px (py-20) | Default Body: Inter */}
+      <section className="py-20 bg-white font-inter px-4 sm:px-6">
         <div className="container mx-auto max-w-7xl">
           
           <motion.div 
-            className="relative bg-[#00082d] rounded-[2.5rem] p-10 sm:p-16 lg:p-24 overflow-hidden shadow-[0_20px_60px_rgba(0,8,45,0.15)] text-center flex flex-col items-center"
+            className="relative bg-brand-navy rounded-[2.5rem] p-10 sm:p-16 lg:p-24 overflow-hidden shadow-[0_20px_60px_rgba(0,8,45,0.15)] text-center flex flex-col items-center"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
             variants={staggerContainer}
           >
             {/* --- Background Decorative Elements --- */}
-            <div className="absolute -top-32 -right-32 w-96 h-96 bg-[#be1622] rounded-full blur-[150px] opacity-40 pointer-events-none"></div>
-            <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-[#be1622] rounded-full blur-[150px] opacity-20 pointer-events-none"></div>
+            <div className="absolute -top-32 -right-32 w-96 h-96 bg-brand-red rounded-full blur-[150px] opacity-40 pointer-events-none"></div>
+            <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-brand-red rounded-full blur-[150px] opacity-20 pointer-events-none"></div>
             
             {/* Abstract Grid Pattern Overlay */}
             <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay pointer-events-none"></div>
             
             {/* --- Content --- */}
             <motion.div variants={fadeUp} className="relative z-10 inline-flex items-center justify-center gap-3 mb-6">
-              <span className="w-6 sm:w-10 h-[2px] bg-[#be1622]"></span>
-              <span className="text-[#be1622] font-bold uppercase tracking-[0.4em] text-[10px] sm:text-[11px]">Take The Next Step</span>
-              <span className="w-6 sm:w-10 h-[2px] bg-[#be1622]"></span>
+              <span className="w-6 sm:w-10 h-[2px] bg-brand-red"></span>
+              {/* Tag: Inter | 14px (No smaller than 14px!) */}
+              <span className="font-inter text-brand-red font-semibold uppercase tracking-[0.4em] text-[14px]">
+                Take The Next Step
+              </span>
+              <span className="w-6 sm:w-10 h-[2px] bg-brand-red"></span>
             </motion.div>
 
-            <motion.h2 variants={fadeUp} className="relative z-10 text-4xl sm:text-5xl lg:text-6xl font-serif text-white leading-[1.1] tracking-tight mb-6 max-w-3xl">
+            {/* H2 Title: Poppins | 44px | Line-height 1.3 */}
+            <motion.h2 variants={fadeUp} className="font-poppins relative z-10 text-3xl sm:text-4xl md:text-[44px] font-semibold text-white leading-[1.3] tracking-tight mb-6 max-w-3xl">
               Ready to secure your <br className="hidden sm:block" />
-              <span className="italic font-light text-white/70">ideal workforce?</span>
+              <span className="italic font-normal text-white/70">ideal workforce?</span>
             </motion.h2>
 
-            <motion.p variants={fadeUp} className="relative z-10 text-slate-400 text-sm sm:text-base lg:text-lg max-w-2xl leading-relaxed font-light mb-12">
+            {/* Paragraph: Inter | 17px | Line-height 1.7 */}
+            <motion.p variants={fadeUp} className="font-inter relative z-10 text-white/70 text-[16px] md:text-[17px] max-w-2xl leading-[1.7] font-normal mb-12">
               Join hundreds of satisfied families and top-tier corporations across Hyderabad. Experience seamless, verified, and professional staffing solutions today.
             </motion.p>
 
             {/* --- Action Buttons --- */}
-            <motion.div variants={fadeUp} className="relative z-10 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto">
+            <motion.div variants={fadeUp} className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full sm:w-auto">
               
-              {/* Primary Button: Hire Staff */}
+              {/* Primary Button: Hire Staff | Inter | 16px | Semi-bold (600) */}
               <button 
                 onClick={() => setIsModalOpen(true)}
-                className="w-full sm:w-auto flex items-center justify-center gap-3 px-10 py-4 sm:py-5 bg-[#be1622] text-white text-[11px] sm:text-xs font-bold uppercase tracking-[0.2em] rounded-xl hover:bg-white hover:text-[#00082d] transition-all duration-300 shadow-[0_10px_30px_rgba(190,22,34,0.3)] hover:shadow-[0_15px_40px_rgba(255,255,255,0.2)] group"
+                className="font-inter w-full sm:w-auto flex items-center justify-center gap-3 px-10 py-4 sm:py-5 bg-brand-red text-white text-[16px] font-semibold rounded-xl hover:bg-white hover:text-brand-navy transition-all duration-300 shadow-[0_10px_30px_rgba(190,22,34,0.3)] hover:shadow-[0_15px_40px_rgba(255,255,255,0.2)] group"
               >
                 Hire Staff Now
-                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
               </button>
 
-              {/* Secondary Button: Apply for Job */}
+              {/* Secondary Button: Apply for Job | Inter | 16px | Semi-bold (600) */}
               <button 
                 onClick={() => setIsModalOpen(true)}
-                className="w-full sm:w-auto flex items-center justify-center gap-3 px-10 py-4 sm:py-5 bg-transparent border border-white/20 text-white text-[11px] sm:text-xs font-bold uppercase tracking-[0.2em] rounded-xl hover:bg-white/10 hover:border-white/40 transition-all duration-300 group"
+                className="font-inter w-full sm:w-auto flex items-center justify-center gap-3 px-10 py-4 sm:py-5 bg-transparent border border-white/20 text-white text-[16px] font-semibold rounded-xl hover:bg-white/10 hover:border-white/40 transition-all duration-300 group"
               >
                 Apply as Professional
-                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
+                <ArrowRight size={18} className="transition-transform group-hover:translate-x-1 opacity-70 group-hover:opacity-100" />
               </button>
 
             </motion.div>

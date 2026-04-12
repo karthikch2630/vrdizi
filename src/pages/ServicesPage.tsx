@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, type Variants } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { CheckCircle2, ArrowRight, ShieldCheck, Clock, Headphones } from 'lucide-react'; // Using Lucide icons
 import HouseMaids from "../assets/Housemaids.png"
 import Cooks from "../assets/cooks.png"
 import ChildCare from "../assets/Childcare.png"
@@ -85,30 +86,33 @@ const services = [
 
 const ServicesPage: React.FC = () => {
   return (
-    <main className="font-sans bg-white pt-28 lg:pt-32 pb-10 overflow-hidden min-h-screen">
+    <main className="font-inter bg-white pt-28 lg:pt-32 pb-10 overflow-hidden min-h-screen">
       
       {/* =========================================
           1. PAGE HEADER
       ========================================= */}
-      <section className="px-4 sm:px-6 mb-16 lg:mb-32">
+      <section className="px-4 sm:px-6 mb-20 lg:mb-24">
         <motion.div 
           className="container mx-auto max-w-4xl text-center"
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
         >
-          <motion.div variants={fadeUp} className="inline-flex items-center justify-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <span className="w-6 sm:w-8 h-[2px] bg-[#be1622]"></span>
-            <span className="text-[#be1622] font-bold uppercase tracking-[0.3em] text-[9px] sm:text-[10px]">Our Expertise</span>
-            <span className="w-6 sm:w-8 h-[2px] bg-[#be1622]"></span>
+          <motion.div variants={fadeUp} className="inline-flex items-center justify-center gap-2 sm:gap-3 mb-6">
+            <span className="w-6 sm:w-8 h-[2px] bg-brand-red"></span>
+            {/* Tag: Poppins | 14px (No smaller!) */}
+            <span className="font-poppins text-brand-red font-semibold uppercase tracking-[0.3em] text-[14px]">Our Expertise</span>
+            <span className="w-6 sm:w-8 h-[2px] bg-brand-red"></span>
           </motion.div>
           
-          <motion.h1 variants={fadeUp} className="text-4xl min-[400px]:text-5xl md:text-6xl lg:text-7xl font-serif text-[#00082d] leading-[1.1] tracking-tight mb-6 lg:mb-8">
+          {/* H1: Poppins | 44px | Line-height 1.3 */}
+          <motion.h1 variants={fadeUp} className="font-poppins text-4xl sm:text-5xl md:text-[44px] font-semibold text-brand-navy leading-[1.3] tracking-tight mb-6 lg:mb-8">
             Premium Staffing <br />
-            <span className="italic font-light text-slate-400">for Every Need.</span>
+            <span className="italic font-normal text-slate-400">for Every Need.</span>
           </motion.h1>
           
-          <motion.p variants={fadeUp} className="text-slate-500 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed font-light px-2">
+          {/* Paragraph: Inter | 17px | Line-height 1.7 */}
+          <motion.p variants={fadeUp} className="font-inter text-slate-500 text-[16px] md:text-[17px] max-w-2xl mx-auto leading-[1.7] font-normal px-2">
             From maintaining the sanctity of your home to securing your corporate assets, VR Dizi provides specialized, heavily vetted personnel tailored to your exact requirements.
           </motion.p>
         </motion.div>
@@ -117,8 +121,8 @@ const ServicesPage: React.FC = () => {
       {/* =========================================
           2. SERVICES (EDITORIAL ZIG-ZAG LAYOUT)
       ========================================= */}
-      <section className="px-4 sm:px-6 pb-16 lg:pb-20">
-        <div className="container mx-auto max-w-7xl flex flex-col gap-16 md:gap-24 lg:gap-32">
+      <section className="px-4 sm:px-6 pb-20">
+        <div className="container mx-auto max-w-7xl flex flex-col gap-20 md:gap-24 lg:gap-32">
           
           {services.map((service, index) => (
             <motion.div 
@@ -127,7 +131,7 @@ const ServicesPage: React.FC = () => {
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
               variants={staggerContainer}
-              className={`flex flex-col gap-8 lg:gap-20 items-center ${service.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
+              className={`flex flex-col gap-10 lg:gap-20 items-center ${service.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
             >
               
               {/* Image Side */}
@@ -139,43 +143,49 @@ const ServicesPage: React.FC = () => {
                     className="w-full h-full object-cover opacity-90 lg:group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
                   {/* Subtle overlay for premium feel */}
-                  <div className="absolute inset-0 bg-[#00082d]/5 mix-blend-multiply transition-opacity lg:group-hover:opacity-0"></div>
+                  <div className="absolute inset-0 bg-brand-navy/5 mix-blend-multiply transition-opacity lg:group-hover:opacity-0"></div>
                 </div>
                 
-                {/* Decorative floating block (Hidden on mobile for cleaner look) */}
-                <div className={`hidden lg:block absolute top-1/2 -translate-y-1/2 w-8 h-32 bg-[#be1622] rounded-full blur-[40px] opacity-20 pointer-events-none ${service.reverse ? '-left-10' : '-right-10'}`}></div>
+                {/* Decorative floating block */}
+                <div className={`hidden lg:block absolute top-1/2 -translate-y-1/2 w-8 h-32 bg-brand-red rounded-full blur-[40px] opacity-20 pointer-events-none ${service.reverse ? '-left-10' : '-right-10'}`}></div>
               </motion.div>
 
               {/* Content Side */}
               <div className="w-full lg:w-1/2">
                 <motion.div variants={fadeUp} className="mb-4">
-                  <span className="text-slate-200 font-serif italic text-5xl lg:text-6xl block mb-2 leading-none">0{index + 1}</span>
-                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#00082d] tracking-tight">{service.title}</h2>
-                  <p className="text-[#be1622] text-xs lg:text-sm font-bold tracking-widest uppercase mt-2 lg:mt-3">{service.subtitle}</p>
+                  {/* Number: Poppins | 56px */}
+                  <span className="font-poppins text-slate-200 font-semibold text-[44px] lg:text-[56px] block mb-2 leading-[1.3]">0{index + 1}</span>
+                  {/* H2: Poppins | 32px */}
+                  <h2 className="font-poppins text-2xl sm:text-[32px] font-semibold text-brand-navy tracking-tight leading-[1.3]">{service.title}</h2>
+                  {/* Subtitle: Inter | 14px */}
+                  <p className="font-inter text-brand-red text-[14px] font-semibold tracking-widest uppercase mt-2 lg:mt-3">{service.subtitle}</p>
                 </motion.div>
                 
-                <motion.p variants={fadeUp} className="text-slate-500 text-sm lg:text-base leading-relaxed font-light mb-6 lg:mb-8">
+                {/* Paragraph: Inter | 16px */}
+                <motion.p variants={fadeUp} className="font-inter text-slate-500 text-[16px] leading-[1.7] font-normal mb-8 lg:mb-10">
                   {service.description}
                 </motion.p>
                 
-                <motion.ul variants={fadeUp} className="space-y-3 lg:space-y-4 mb-8 lg:mb-10">
+                <motion.ul variants={fadeUp} className="space-y-4 mb-10">
                   {service.features.map((feature, i) => (
                     <li key={i} className="flex items-start gap-3">
-                      <div className="mt-0.5 lg:mt-1 w-4 h-4 lg:w-5 lg:h-5 rounded-full bg-slate-50 flex items-center justify-center shrink-0 border border-slate-200">
-                        <svg className="w-2.5 h-2.5 lg:w-3 lg:h-3 text-[#be1622]" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+                      <div className="mt-0.5 w-5 h-5 rounded-full bg-slate-50 flex items-center justify-center shrink-0 text-brand-red">
+                        <CheckCircle2 size={16} strokeWidth={2.5} />
                       </div>
-                      <span className="text-slate-600 text-sm font-medium">{feature}</span>
+                      {/* Features: Inter | 16px */}
+                      <span className="font-inter text-slate-600 text-[16px] font-medium">{feature}</span>
                     </li>
                   ))}
                 </motion.ul>
 
                 <motion.div variants={fadeUp}>
+                  {/* Link Button: Inter | 16px | Semi-bold (600) */}
                   <Link 
                     to="/contact" 
-                    className="inline-flex items-center justify-center w-full lg:w-auto gap-2 px-6 py-3.5 lg:px-0 lg:py-0 bg-[#00082d] lg:bg-transparent text-white lg:text-[#00082d] hover:bg-[#be1622] lg:hover:bg-transparent lg:hover:text-[#be1622] text-[11px] font-bold uppercase tracking-[0.2em] transition-colors rounded-xl lg:rounded-none group"
+                    className="font-inter inline-flex items-center justify-center w-full lg:w-auto gap-3 px-6 py-4 lg:px-0 lg:py-0 bg-brand-navy lg:bg-transparent text-white lg:text-brand-navy hover:bg-brand-red lg:hover:bg-transparent lg:hover:text-brand-red text-[16px] font-semibold rounded-xl lg:rounded-none group transition-all"
                   >
                     Inquire About Service
-                    <svg className="w-4 h-4 lg:group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    <ArrowRight size={18} className="lg:group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </motion.div>
               </div>
@@ -189,34 +199,37 @@ const ServicesPage: React.FC = () => {
       {/* =========================================
           3. THE VR DIZI PROMISE
       ========================================= */}
-      <section className="py-16 lg:py-20 px-4 sm:px-6 bg-slate-50 border-y border-slate-100">
+      {/* SECTION PADDING: 80px (py-20) */}
+      <section className="py-20 px-4 sm:px-6 bg-slate-50 border-y border-slate-100">
         <div className="container mx-auto max-w-7xl">
           <motion.div 
             initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slate-200"
+            className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slate-200"
           >
-            <motion.div variants={fadeUp} className="py-8 md:py-0 md:px-6">
-              <div className="w-10 h-10 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-4 lg:mb-6 shadow-sm text-[#00082d]">
-                <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            <motion.div variants={fadeUp} className="pt-8 md:pt-0 md:px-6">
+              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm text-brand-navy">
+                <ShieldCheck size={24} />
               </div>
-              <h4 className="text-base lg:text-lg font-bold text-[#00082d] mb-2">100% Verified Staff</h4>
-              <p className="text-slate-500 text-xs lg:text-sm font-light px-4 md:px-0">Every candidate passes a strict 7-step background and behavioral check.</p>
+              {/* H4: Poppins | 20px | Semi-bold */}
+              <h4 className="font-poppins text-[20px] font-semibold text-brand-navy mb-2 leading-[1.3]">100% Verified Staff</h4>
+              {/* P: Inter | 14px | Line-height 1.7 */}
+              <p className="font-inter text-slate-500 text-[14px] leading-[1.7] font-normal px-4 md:px-0">Every candidate passes a strict 7-step background and behavioral check.</p>
             </motion.div>
 
-            <motion.div variants={fadeUp} className="py-8 md:py-0 md:px-6">
-              <div className="w-10 h-10 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-4 lg:mb-6 shadow-sm text-[#00082d]">
-                <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <motion.div variants={fadeUp} className="pt-8 md:pt-0 md:px-6">
+              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm text-brand-navy">
+                <Clock size={24} />
               </div>
-              <h4 className="text-base lg:text-lg font-bold text-[#00082d] mb-2">48-Hour Replacement</h4>
-              <p className="text-slate-500 text-xs lg:text-sm font-light px-4 md:px-0">If a placement isn't the perfect fit, we provide a replacement within 48 hours.</p>
+              <h4 className="font-poppins text-[20px] font-semibold text-brand-navy mb-2 leading-[1.3]">48-Hour Replacement</h4>
+              <p className="font-inter text-slate-500 text-[14px] leading-[1.7] font-normal px-4 md:px-0">If a placement isn't the perfect fit, we provide a replacement within 48 hours.</p>
             </motion.div>
 
-            <motion.div variants={fadeUp} className="py-8 md:py-0 md:px-6">
-              <div className="w-10 h-10 lg:w-12 lg:h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-4 lg:mb-6 shadow-sm text-[#00082d]">
-                <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            <motion.div variants={fadeUp} className="pt-8 md:pt-0 md:px-6">
+              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm text-brand-navy">
+                <Headphones size={24} />
               </div>
-              <h4 className="text-base lg:text-lg font-bold text-[#00082d] mb-2">Dedicated Support</h4>
-              <p className="text-slate-500 text-xs lg:text-sm font-light px-4 md:px-0">Your personal account manager is available around the clock to assist you.</p>
+              <h4 className="font-poppins text-[20px] font-semibold text-brand-navy mb-2 leading-[1.3]">Dedicated Support</h4>
+              <p className="font-inter text-slate-500 text-[14px] leading-[1.7] font-normal px-4 md:px-0">Your personal account manager is available around the clock to assist you.</p>
             </motion.div>
           </motion.div>
         </div>
@@ -225,18 +238,21 @@ const ServicesPage: React.FC = () => {
       {/* =========================================
           4. BOTTOM CTA
       ========================================= */}
-      <section className="py-20 lg:py-24 px-4 sm:px-6 bg-white text-center">
+      <section className="py-20 px-4 sm:px-6 bg-white text-center">
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
           className="container mx-auto max-w-2xl"
         >
-          <h2 className="text-3xl sm:text-4xl font-serif text-[#00082d] mb-4 lg:mb-6 tracking-tight">
+          {/* H2: Poppins | 44px | Semi-bold */}
+          <h2 className="font-poppins text-3xl md:text-[44px] font-semibold text-brand-navy mb-6 tracking-tight leading-[1.3]">
             Ready to secure your staff?
           </h2>
-          <p className="text-slate-500 text-sm lg:text-base mb-8 lg:mb-10 leading-relaxed font-light">
+          {/* P: Inter | 17px | Line-height 1.7 */}
+          <p className="font-inter text-slate-500 text-[16px] md:text-[17px] mb-10 leading-[1.7] font-normal">
             Fill out a simple inquiry form, and our placement specialists in Hyderabad will respond immediately.
           </p>
-          <Link to="/contact" className="inline-block w-full sm:w-auto px-10 py-4 bg-[#be1622] text-white text-[11px] font-bold uppercase tracking-[0.2em] rounded-xl hover:bg-[#00082d] hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+          {/* CTA Button: Inter | 16px | Semi-bold */}
+          <Link to="/contact" className="font-inter inline-block w-full sm:w-auto px-10 py-4 bg-brand-red text-white text-[16px] font-semibold rounded-xl hover:bg-brand-navy hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
             Start Your Request
           </Link>
         </motion.div>

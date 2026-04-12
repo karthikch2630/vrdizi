@@ -12,12 +12,16 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
-          {/* Backdrop */}
+          
+          {/* Backdrop using brand-navy */}
           <motion.div 
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-[#00082d]/60 backdrop-blur-sm cursor-pointer"
+            className="absolute inset-0 bg-brand-navy/60 backdrop-blur-sm cursor-pointer"
           />
+          
           {/* Modal Container */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.95, y: 20 }} 
@@ -26,9 +30,10 @@ const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
             transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
             className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
           >
-            {/* Import and use the form component here */}
+            {/* The form component already contains your Premium Typography System */}
             <ContactForm inModal={true} onClose={onClose} />
           </motion.div>
+          
         </div>
       )}
     </AnimatePresence>

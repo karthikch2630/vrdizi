@@ -71,18 +71,12 @@ const Testimonials: React.FC = () => {
   }, []);
 
   // Use animation frame to smoothly scroll the track
-  // Negative direction moves items to the left
   const direction = -1;
-  const speed = 1.5; // Adjust this for faster/slower scrolling
+  const speed = 1.5; 
 
-  // Changed 't' to '_t' to fix the unused variable warning, and used 'const' for moveBy
   useAnimationFrame((_t, delta) => {
     const moveBy = direction * speed * (delta / 16);
-    
-    // We duplicate the array 3 times to create the illusion of infinity.
-    // If we have scrolled past a certain point, loop back to 0.
-    // Note: The specific reset value depends on the width of the cards + gap.
-    // We assume card width ~400px + 32px gap = 432px per item.
+    // Assuming card width ~400px + 32px gap = 432px per item.
     const resetPoint = -(testimonials.length * 432); 
 
     if (baseX.get() <= resetPoint) {
@@ -93,31 +87,33 @@ const Testimonials: React.FC = () => {
   });
 
   return (
-    <section className="py-20 sm:py-28 bg-white font-sans relative overflow-hidden">
+    /* SECTION PADDING: 80px (py-20) | Default Body: Inter */
+    <section className="py-20 bg-white font-inter relative overflow-hidden">
       
       {/* Background Soft Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#be1622]/5 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-red/5 rounded-full blur-[120px] pointer-events-none"></div>
 
       <div className="relative z-10 w-full" ref={containerRef}>
         
         {/* --- SECTION HEADER --- */}
-        <div className="text-center max-w-2xl mx-auto mb-16 sm:mb-20 px-4">
-          <h2 className="text-[#be1622] font-bold uppercase tracking-[0.4em] text-[9px] sm:text-[10px] mb-2">Verified Reviews</h2>
-          <p className="text-3xl sm:text-5xl font-serif text-[#00082d] leading-tight tracking-tight">
+        <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-20 px-4">
+          {/* Subheading: Poppins | 14px (No smaller than 14px!) */}
+          <h2 className="font-poppins text-brand-red font-semibold uppercase tracking-[0.4em] text-[14px] mb-4">
+            Verified Reviews
+          </h2>
+          {/* H2 Title: Poppins | 44px | Line-height 1.3 */}
+          <p className="font-poppins text-3xl md:text-[44px] font-semibold text-brand-navy leading-[1.3] tracking-tight">
             Trusted by Families & <br className="hidden sm:block" />
-            <span className="italic font-light text-slate-500">Leading Corporations.</span>
+            <span className="italic font-normal text-slate-500">Leading Corporations.</span>
           </p>
         </div>
 
         {/* --- INFINITE SLIDING CAROUSEL --- */}
-        {/* We add fading edges to the container so cards disappear smoothly */}
         <div className="relative w-full overflow-hidden flex [mask-image:_linear-gradient(to_right,transparent_0,_black_100px,_black_calc(100%-100px),transparent_100%)] pt-8 pb-12">
-          
           <motion.div 
             className="flex gap-8 px-4"
             style={{ x: baseX }}
           >
-            {/* Render the array 3 times to ensure there is always content filling the screen */}
             {[...testimonials, ...testimonials, ...testimonials].map((testimonial, idx) => (
               <TestimonialCard 
                 key={idx} 
@@ -126,22 +122,23 @@ const Testimonials: React.FC = () => {
               />
             ))}
           </motion.div>
-
         </div>
 
-        {/* Global Stats Footer */}
+        {/* --- GLOBAL STATS FOOTER --- */}
         <div className="mt-10 pt-10 border-t border-slate-200 flex flex-wrap justify-center gap-10 sm:gap-20 mx-4 max-w-7xl xl:mx-auto">
           <div className="text-center">
-            <h4 className="text-4xl font-serif text-[#00082d] mb-1">500+</h4>
-            <p className="text-[#be1622] text-[10px] uppercase tracking-widest font-bold">Happy Families</p>
+            {/* Stat Number: Poppins | 44px */}
+            <h4 className="font-poppins text-4xl md:text-[44px] font-semibold leading-[1.3] text-brand-navy mb-2">500+</h4>
+            {/* Stat Label: Inter | 14px */}
+            <p className="font-inter text-brand-red text-[14px] uppercase tracking-widest font-semibold">Happy Families</p>
           </div>
           <div className="text-center">
-            <h4 className="text-4xl font-serif text-[#00082d] mb-1">100%</h4>
-            <p className="text-[#be1622] text-[10px] uppercase tracking-widest font-bold">Vetted Staff</p>
+            <h4 className="font-poppins text-4xl md:text-[44px] font-semibold leading-[1.3] text-brand-navy mb-2">100%</h4>
+            <p className="font-inter text-brand-red text-[14px] uppercase tracking-widest font-semibold">Vetted Staff</p>
           </div>
           <div className="text-center">
-            <h4 className="text-4xl font-serif text-[#00082d] mb-1">48hr</h4>
-            <p className="text-[#be1622] text-[10px] uppercase tracking-widest font-bold">Replacement</p>
+            <h4 className="font-poppins text-4xl md:text-[44px] font-semibold leading-[1.3] text-brand-navy mb-2">48hr</h4>
+            <p className="font-inter text-brand-red text-[14px] uppercase tracking-widest font-semibold">Replacement</p>
           </div>
         </div>
 
@@ -151,12 +148,10 @@ const Testimonials: React.FC = () => {
 };
 
 // --- INDIVIDUAL CARD COMPONENT ---
-// Replaced 'any' with the proper 'Testimonial' interface
 const TestimonialCard: React.FC<{ testimonial: Testimonial, containerCenter: number }> = ({ testimonial, containerCenter }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [isCenter, setIsCenter] = useState(false);
 
-  // We use requestAnimationFrame inside a useEffect to continuously check this card's position
   useEffect(() => {
     let animationFrameId: number;
 
@@ -179,10 +174,9 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial, containerCenter: num
   return (
     <div 
       ref={cardRef}
-      // Base styling + dynamic highlighted styling based on 'isCenter'
       className={`relative w-[320px] sm:w-[400px] shrink-0 rounded-3xl p-8 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]
         ${isCenter 
-          ? 'bg-[#be1622] shadow-[0_20px_40px_rgba(190,22,34,0.3)] scale-105 z-10 -translate-y-4' 
+          ? 'bg-brand-red shadow-[0_20px_40px_rgba(190,22,34,0.3)] scale-105 z-10 -translate-y-4' 
           : 'bg-white border border-slate-200 shadow-[0_10px_30px_rgba(0,0,0,0.03)] scale-95 opacity-60 z-0'
         }
       `}
@@ -193,29 +187,36 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial, containerCenter: num
       </div>
       
       {/* Stars */}
-      <div className={`flex gap-1 mb-6 transition-colors duration-700 ${isCenter ? 'text-white' : 'text-[#be1622]'}`}>
+      <div className={`flex gap-1 mb-6 transition-colors duration-700 ${isCenter ? 'text-white' : 'text-brand-red'}`}>
         {[...Array(5)].map((_, i) => (
           <svg key={i} className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
         ))}
       </div>
 
-      <p className={`text-sm leading-relaxed mb-8 relative z-10 transition-colors duration-700 ${isCenter ? 'text-white font-medium' : 'text-slate-500 font-light'}`}>
+      {/* Quote: Inter | 16px | Line-height 1.7 */}
+      <p className={`font-inter text-[16px] leading-[1.7] mb-8 relative z-10 transition-colors duration-700 ${isCenter ? 'text-white font-medium' : 'text-slate-500 font-normal'}`}>
         "{testimonial.quote}"
       </p>
 
       <div className="flex items-center gap-4">
         {testimonial.image ? (
-          <div className={`w-10 h-10 rounded-full border overflow-hidden transition-colors duration-700 ${isCenter ? 'border-white/30' : 'border-slate-200'}`}>
+          <div className={`w-12 h-12 rounded-full border-2 overflow-hidden transition-colors duration-700 ${isCenter ? 'border-white/30' : 'border-slate-200'}`}>
             <img src={testimonial.image} alt={testimonial.name} className="w-full h-full object-cover" />
           </div>
         ) : (
-          <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-xs transition-colors duration-700 ${isCenter ? 'bg-white/10 border border-white/30 text-white' : 'bg-slate-100 border border-slate-200 text-[#00082d]'}`}>
+          <div className={`font-inter w-12 h-12 rounded-full flex items-center justify-center font-semibold text-[14px] transition-colors duration-700 ${isCenter ? 'bg-white/10 border border-white/30 text-white' : 'bg-slate-100 border border-slate-200 text-brand-navy'}`}>
             {testimonial.initials}
           </div>
         )}
         <div>
-          <h5 className={`font-bold text-sm transition-colors duration-700 ${isCenter ? 'text-white' : 'text-[#00082d]'}`}>{testimonial.name}</h5>
-          <p className={`text-[10px] uppercase tracking-widest font-bold transition-colors duration-700 ${isCenter ? 'text-white/70' : 'text-slate-400'}`}>{testimonial.role}</p>
+          {/* Reviewer Name: Poppins | 16px | Semi-bold */}
+          <h5 className={`font-poppins font-semibold text-[16px] transition-colors duration-700 ${isCenter ? 'text-white' : 'text-brand-navy'}`}>
+            {testimonial.name}
+          </h5>
+          {/* Reviewer Role: Inter | 14px */}
+          <p className={`font-inter text-[14px] uppercase tracking-widest font-medium transition-colors duration-700 ${isCenter ? 'text-white/70' : 'text-slate-400'}`}>
+            {testimonial.role}
+          </p>
         </div>
       </div>
     </div>

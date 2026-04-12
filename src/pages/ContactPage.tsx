@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, type Variants } from 'framer-motion';
+import { Phone, Mail, MapPin, ExternalLink } from 'lucide-react'; // Using Lucide icons
 import ContactForm from '../components/ContactForm';
 import ContactModal from '../components/ContactModal';
 
@@ -29,12 +30,13 @@ const ContactPage: React.FC = () => {
       {/* The Reusable Modal Component */}
       <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
-      <main className="font-sans bg-white pt-32 pb-20 overflow-hidden min-h-screen relative">
+      {/* Default Body Font: Inter */}
+      <main className="font-inter bg-white pt-32 pb-20 overflow-hidden min-h-screen relative">
         
         {/* =========================================
             1. HEADER SECTION
         ========================================= */}
-        <section className="px-4 sm:px-6 mb-16 lg:mb-24">
+        <section className="px-4 sm:px-6 mb-20 lg:mb-24">
           <motion.div 
             className="container mx-auto max-w-4xl text-center"
             variants={staggerContainer}
@@ -42,28 +44,31 @@ const ContactPage: React.FC = () => {
             animate="visible"
           >
             <motion.div variants={fadeUp} className="inline-flex items-center justify-center gap-3 mb-6">
-              <span className="w-8 h-[2px] bg-[#be1622]"></span>
-              <span className="text-[#be1622] font-bold uppercase tracking-[0.3em] text-[10px]">Get in Touch</span>
-              <span className="w-8 h-[2px] bg-[#be1622]"></span>
+              <span className="w-8 h-[2px] bg-brand-red"></span>
+              {/* Tag: Poppins | 14px (No smaller!) */}
+              <span className="font-poppins text-brand-red font-semibold uppercase tracking-[0.3em] text-[14px]">Get in Touch</span>
+              <span className="w-8 h-[2px] bg-brand-red"></span>
             </motion.div>
             
-            <motion.h1 variants={fadeUp} className="text-4xl sm:text-5xl lg:text-6xl font-serif text-[#00082d] leading-[1.1] tracking-tight mb-6">
+            {/* H1: Poppins | 44px | Line-height 1.3 */}
+            <motion.h1 variants={fadeUp} className="font-poppins text-4xl sm:text-5xl md:text-[44px] font-semibold text-brand-navy leading-[1.3] tracking-tight mb-6">
               Let's build your <br className="hidden sm:block" />
-              <span className="italic font-light text-slate-400">trusted team.</span>
+              <span className="italic font-normal text-slate-400">trusted team.</span>
             </motion.h1>
             
-            <motion.p variants={fadeUp} className="text-slate-500 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed font-light mb-8">
+            {/* Paragraph: Inter | 17px | Line-height 1.7 */}
+            <motion.p variants={fadeUp} className="font-inter text-slate-500 text-[16px] md:text-[17px] max-w-2xl mx-auto leading-[1.7] font-normal mb-10">
               Whether you need compassionate care for a loved one, robust security for your business, or you are looking to join our verified team of professionals.
             </motion.p>
 
-            {/* Button to open form as Modal */}
+            {/* Button: Inter | 16px | Semi-bold (600) */}
             <motion.button 
               variants={fadeUp}
               onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center gap-2 px-8 py-4 bg-[#00082d] text-white text-[11px] font-bold uppercase tracking-widest rounded-xl hover:bg-[#be1622] hover:-translate-y-1 transition-all duration-300 shadow-lg"
+              className="font-inter inline-flex items-center justify-center gap-3 px-10 py-4 bg-brand-navy text-white text-[16px] font-semibold uppercase tracking-widest rounded-xl hover:bg-brand-red hover:-translate-y-1 transition-all duration-300 shadow-lg group"
             >
               Open Form in Modal
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+              <ExternalLink size={18} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </motion.button>
           </motion.div>
         </section>
@@ -81,32 +86,34 @@ const ContactPage: React.FC = () => {
               viewport={{ once: true, margin: "-50px" }}
             >
               {/* Phone Card */}
-              <motion.a href="tel:+918688995438" variants={fadeUp} className="bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:border-[#be1622]/30 hover:shadow-[0_10px_40px_rgba(190,22,34,0.05)] transition-all duration-300 group flex flex-col items-center text-center">
-                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 text-[#00082d] group-hover:text-[#be1622] shadow-sm transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+              <motion.a href="tel:+918688995438" variants={fadeUp} className="bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:border-brand-red/30 hover:shadow-[0_10px_40px_rgba(190,22,34,0.05)] transition-all duration-300 group flex flex-col items-center text-center">
+                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 text-brand-navy group-hover:text-brand-red shadow-sm transition-colors">
+                  <Phone size={20} />
                 </div>
-                <h3 className="text-sm font-bold text-[#00082d] mb-2 uppercase tracking-widest">Call Us</h3>
-                <p className="text-slate-500 font-medium">+91 86889 95438</p>
-                <p className="text-slate-400 text-xs mt-2">Mon-Sat, 9am to 6pm</p>
+                {/* Card Tag: Poppins | 14px | Semi-bold */}
+                <h3 className="font-poppins text-[14px] font-semibold text-brand-navy mb-2 uppercase tracking-widest">Call Us</h3>
+                {/* Detail: Inter | 16px */}
+                <p className="font-inter text-slate-500 font-medium text-[16px]">+91 86889 95438</p>
+                <p className="font-inter text-slate-400 text-[14px] mt-2">Mon-Sat, 9am to 6pm</p>
               </motion.a>
 
               {/* Email Card */}
-              <motion.a href="mailto:info@vrdizi.com" variants={fadeUp} className="bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:border-[#be1622]/30 hover:shadow-[0_10px_40px_rgba(190,22,34,0.05)] transition-all duration-300 group flex flex-col items-center text-center">
-                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 text-[#00082d] group-hover:text-[#be1622] shadow-sm transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              <motion.a href="mailto:info@vrdizi.com" variants={fadeUp} className="bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:border-brand-red/30 hover:shadow-[0_10px_40px_rgba(190,22,34,0.05)] transition-all duration-300 group flex flex-col items-center text-center">
+                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 text-brand-navy group-hover:text-brand-red shadow-sm transition-colors">
+                  <Mail size={20} />
                 </div>
-                <h3 className="text-sm font-bold text-[#00082d] mb-2 uppercase tracking-widest">Email Us</h3>
-                <p className="text-slate-500 font-medium">info@vrdizi.com</p>
-                <p className="text-slate-400 text-xs mt-2">Online Support 24/7</p>
+                <h3 className="font-poppins text-[14px] font-semibold text-brand-navy mb-2 uppercase tracking-widest">Email Us</h3>
+                <p className="font-inter text-slate-500 font-medium text-[16px]">info@vrdizi.com</p>
+                <p className="font-inter text-slate-400 text-[14px] mt-2">Online Support 24/7</p>
               </motion.a>
 
               {/* Location Card */}
-              <motion.div variants={fadeUp} className="bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:border-[#be1622]/30 hover:shadow-[0_10px_40px_rgba(190,22,34,0.05)] transition-all duration-300 group flex flex-col items-center text-center">
-                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 text-[#00082d] group-hover:text-[#be1622] shadow-sm transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              <motion.div variants={fadeUp} className="bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:border-brand-red/30 hover:shadow-[0_10px_40px_rgba(190,22,34,0.05)] transition-all duration-300 group flex flex-col items-center text-center cursor-default">
+                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-6 text-brand-navy group-hover:text-brand-red shadow-sm transition-colors">
+                  <MapPin size={20} />
                 </div>
-                <h3 className="text-sm font-bold text-[#00082d] mb-2 uppercase tracking-widest">Headquarters</h3>
-                <p className="text-slate-500 font-medium text-sm leading-relaxed">
+                <h3 className="font-poppins text-[14px] font-semibold text-brand-navy mb-2 uppercase tracking-widest">Headquarters</h3>
+                <p className="font-inter text-slate-500 font-medium text-[16px] leading-[1.7]">
                   Maa Nilayam, 3rd Floor, 1-98/9/3/20<br />
                   Madhapur, Hyderabad 500081
                 </p>
@@ -146,12 +153,14 @@ const ContactPage: React.FC = () => {
                   alt="VR Dizi Headquarters" 
                   className="absolute inset-0 w-full h-full object-cover grayscale opacity-80 mix-blend-multiply"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#00082d] via-[#00082d]/40 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/40 to-transparent"></div>
                 
                 <div className="absolute bottom-10 left-10 right-10">
                   <div className="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl">
-                    <h4 className="text-white font-bold text-lg mb-1">Corporate Office</h4>
-                    <p className="text-white/70 text-sm leading-relaxed">
+                    {/* Overlay Title: Poppins | 20px | Semi-bold */}
+                    <h4 className="font-poppins text-white font-semibold text-[20px] mb-2 leading-[1.3]">Corporate Office</h4>
+                    {/* Overlay Address: Inter | 14px | Line-height 1.7 */}
+                    <p className="font-inter text-white/70 text-[14px] leading-[1.7] font-normal">
                       Maa Nilayam, 3rd Floor, 1-98/9/3/20<br/>
                       Sy No 71, Madhapur, Serilingampally<br/>
                       Hyderabad, Telangana 500081
