@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { memo } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { motion, type Variants } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { CheckCircle2, ArrowRight, ShieldCheck, Clock, Headphones } from 'lucide-react'; // Using Lucide icons
-import HouseMaids from "../assets/Housemaids.png"
-import Cooks from "../assets/cooks.png"
-import ChildCare from "../assets/Childcare.png"
-import Healthcare from "../assets/Healthcare.png"
-import Watchmen from "../assets/Watchmen.png"
+import { CheckCircle2, ArrowRight, ShieldCheck, Clock, Headphones } from 'lucide-react';
+import HouseMaids from "../assets/Housemaids.png";
+import Cooks from "../assets/cooks.png";
+import ChildCare from "../assets/Childcare.png";
+import Healthcare from "../assets/Healthcare.png";
+import Watchmen from "../assets/Watchmen.png";
 
-// --- Animation Variants ---
+// --- Studio-Grade Animation Variants ---
+const CUSTOM_EASE = [0.22, 1, 0.36, 1] as const;
+
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: { 
     opacity: 1, 
     y: 0, 
-    transition: { duration: 0.8, ease: "easeOut" } 
+    transition: { duration: 1.2, ease: CUSTOM_EASE } 
   }
 };
 
@@ -22,16 +25,18 @@ const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.15 }
+    transition: { staggerChildren: 0.12 }
   }
 };
 
+// More performant and premium image reveal
 const imageReveal: Variants = {
-  hidden: { opacity: 0, scale: 0.95 },
+  hidden: { clipPath: 'inset(10% 10% 10% 10%)', opacity: 0, scale: 1.05 },
   visible: { 
+    clipPath: 'inset(0% 0% 0% 0%)',
     opacity: 1, 
     scale: 1, 
-    transition: { duration: 1, ease: "easeOut" } 
+    transition: { duration: 1.5, ease: CUSTOM_EASE } 
   }
 };
 
@@ -84,181 +89,194 @@ const services = [
   }
 ];
 
-const ServicesPage: React.FC = () => {
-  return (
-    <main className="font-inter bg-white pt-28 lg:pt-32 pb-10 overflow-hidden min-h-screen">
+// Memoize individual service blocks to prevent unnecessary re-renders on scroll
+const ServiceBlock = memo(({ service, index }: { service: typeof services[0], index: number }) => (
+  <motion.div 
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true, margin: "-10%" }}
+    variants={staggerContainer}
+    className={`flex flex-col gap-10 lg:gap-24 items-center ${service.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
+  >
+    {/* Image Side */}
+    <motion.div variants={imageReveal} className="w-full lg:w-1/2 relative group">
+      <div className="relative rounded-[2rem] overflow-hidden shadow-2xl aspect-[4/3] lg:aspect-[4/5] bg-[#fafafa]">
+        <img 
+          src={service.image} 
+          alt={`Professional providing ${service.title.toLowerCase()} services in Hyderabad`} 
+          loading="lazy" // Performance: Native lazy loading
+          decoding="async" // Performance: Non-blocking decoding
+          className="w-full h-full object-cover opacity-95 group-hover:scale-105 transition-transform duration-[1.5s] ease-out will-change-transform"
+        />
+        <div className="absolute inset-0 bg-brand-navy/5 mix-blend-multiply transition-opacity duration-700 lg:group-hover:opacity-0" aria-hidden="true"></div>
+      </div>
+    </motion.div>
+
+    {/* Content Side */}
+    <div className="w-full lg:w-1/2">
+      <motion.div variants={fadeUp} className="mb-6">
+        <span className="font-poppins text-[#f0f0f0] font-medium text-[56px] lg:text-[72px] block mb-2 leading-[1]">0{index + 1}</span>
+        <h2 className="font-poppins text-3xl sm:text-[40px] font-medium text-[#111] tracking-[-0.02em] leading-[1.2]">{service.title}</h2>
+        <p className="font-inter text-brand-red text-[13px] font-medium tracking-[0.2em] uppercase mt-4">{service.subtitle}</p>
+      </motion.div>
       
-      {/* =========================================
-          1. PAGE HEADER
-      ========================================= */}
-      <section className="px-4 sm:px-6 mb-20 lg:mb-24">
-        <motion.div 
-          className="container mx-auto max-w-4xl text-center"
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
+      <motion.p variants={fadeUp} className="font-inter text-[#666] text-[17px] leading-[1.8] font-light mb-10">
+        {service.description}
+      </motion.p>
+      
+      <motion.ul variants={fadeUp} className="space-y-5 mb-12" aria-label={`Features of ${service.title}`}>
+        {service.features.map((feature, i) => (
+          <li key={i} className="flex items-start gap-4">
+            <div className="mt-1 w-6 h-6 rounded-full bg-[#f8f8f8] flex items-center justify-center shrink-0 text-brand-red">
+              <CheckCircle2 size={14} strokeWidth={2.5} aria-hidden="true" />
+            </div>
+            <span className="font-inter text-[#333] text-[16px] font-normal leading-[1.6]">{feature}</span>
+          </li>
+        ))}
+      </motion.ul>
+
+      <motion.div variants={fadeUp}>
+        <Link 
+          to="/contact" 
+          aria-label={`Inquire about ${service.title}`}
+          className="font-inter inline-flex items-center justify-center gap-3 border-b-2 border-transparent hover:border-brand-red pb-1 text-[#111] hover:text-brand-red text-[15px] font-medium uppercase tracking-widest group transition-all"
         >
-          <motion.div variants={fadeUp} className="inline-flex items-center justify-center gap-2 sm:gap-3 mb-6">
-            <span className="w-6 sm:w-8 h-[2px] bg-brand-red"></span>
-            {/* Tag: Poppins | 14px (No smaller!) */}
-            <span className="font-poppins text-brand-red font-semibold uppercase tracking-[0.3em] text-[14px]">Our Expertise</span>
-            <span className="w-6 sm:w-8 h-[2px] bg-brand-red"></span>
-          </motion.div>
-          
-          {/* H1: Poppins | 44px | Line-height 1.3 */}
-          <motion.h1 variants={fadeUp} className="font-poppins text-4xl sm:text-5xl md:text-[44px] font-semibold text-brand-navy leading-[1.3] tracking-tight mb-6 lg:mb-8">
-            Premium Staffing <br />
-            <span className="italic font-normal text-slate-400">for Every Need.</span>
-          </motion.h1>
-          
-          {/* Paragraph: Inter | 17px | Line-height 1.7 */}
-          <motion.p variants={fadeUp} className="font-inter text-slate-500 text-[16px] md:text-[17px] max-w-2xl mx-auto leading-[1.7] font-normal px-2">
-            From maintaining the sanctity of your home to securing your corporate assets, VR Dizi provides specialized, heavily vetted personnel tailored to your exact requirements.
-          </motion.p>
-        </motion.div>
-      </section>
+          Inquire About Service
+          <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform duration-300" aria-hidden="true" />
+        </Link>
+      </motion.div>
+    </div>
+  </motion.div>
+));
 
-      {/* =========================================
-          2. SERVICES (EDITORIAL ZIG-ZAG LAYOUT)
-      ========================================= */}
-      <section className="px-4 sm:px-6 pb-20">
-        <div className="container mx-auto max-w-7xl flex flex-col gap-20 md:gap-24 lg:gap-32">
-          
-          {services.map((service, index) => (
-            <motion.div 
-              key={service.id}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-              variants={staggerContainer}
-              className={`flex flex-col gap-10 lg:gap-20 items-center ${service.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
-            >
-              
-              {/* Image Side */}
-              <motion.div variants={imageReveal} className="w-full lg:w-1/2 relative group">
-                <div className="relative rounded-3xl lg:rounded-[2rem] overflow-hidden shadow-xl lg:shadow-[0_20px_50px_rgba(0,0,0,0.05)] aspect-[4/3] lg:aspect-square bg-slate-100">
-                  <img 
-                    src={service.image} 
-                    alt={service.title} 
-                    className="w-full h-full object-cover opacity-90 lg:group-hover:scale-105 transition-transform duration-700 ease-out"
-                  />
-                  {/* Subtle overlay for premium feel */}
-                  <div className="absolute inset-0 bg-brand-navy/5 mix-blend-multiply transition-opacity lg:group-hover:opacity-0"></div>
-                </div>
-                
-                {/* Decorative floating block */}
-                <div className={`hidden lg:block absolute top-1/2 -translate-y-1/2 w-8 h-32 bg-brand-red rounded-full blur-[40px] opacity-20 pointer-events-none ${service.reverse ? '-left-10' : '-right-10'}`}></div>
-              </motion.div>
+const ServicesPage: React.FC = () => {
+  // SEO Configuration
+  const seoData = {
+    title: "Premium Staffing Services | VRDizi Maids, Nurses & Security",
+    description: "Explore VRDizi's highly vetted staffing solutions in Hyderabad. We provide professional housemaids, culinary cooks, compassionate nannies, registered home nurses, and verified security guards.",
+    url: "https://www.vrdizi.com/services"
+  };
 
-              {/* Content Side */}
-              <div className="w-full lg:w-1/2">
-                <motion.div variants={fadeUp} className="mb-4">
-                  {/* Number: Poppins | 56px */}
-                  <span className="font-poppins text-slate-200 font-semibold text-[44px] lg:text-[56px] block mb-2 leading-[1.3]">0{index + 1}</span>
-                  {/* H2: Poppins | 32px */}
-                  <h2 className="font-poppins text-2xl sm:text-[32px] font-semibold text-brand-navy tracking-tight leading-[1.3]">{service.title}</h2>
-                  {/* Subtitle: Inter | 14px */}
-                  <p className="font-inter text-brand-red text-[14px] font-semibold tracking-widest uppercase mt-2 lg:mt-3">{service.subtitle}</p>
-                </motion.div>
-                
-                {/* Paragraph: Inter | 16px */}
-                <motion.p variants={fadeUp} className="font-inter text-slate-500 text-[16px] leading-[1.7] font-normal mb-8 lg:mb-10">
-                  {service.description}
-                </motion.p>
-                
-                <motion.ul variants={fadeUp} className="space-y-4 mb-10">
-                  {service.features.map((feature, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <div className="mt-0.5 w-5 h-5 rounded-full bg-slate-50 flex items-center justify-center shrink-0 text-brand-red">
-                        <CheckCircle2 size={16} strokeWidth={2.5} />
-                      </div>
-                      {/* Features: Inter | 16px */}
-                      <span className="font-inter text-slate-600 text-[16px] font-medium">{feature}</span>
-                    </li>
-                  ))}
-                </motion.ul>
+  // Structured Data (Schema.org) for Services
+  const schemaMarkup = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "serviceType": "Blue Collar Staffing",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "VRDizi Staffing Solutions",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Hyderabad",
+        "addressRegion": "Telangana"
+      }
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Staffing Categories",
+      "itemListElement": services.map((s, index) => ({
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": s.title,
+          "description": s.description
+        },
+        "position": index + 1
+      }))
+    }
+  };
 
-                <motion.div variants={fadeUp}>
-                  {/* Link Button: Inter | 16px | Semi-bold (600) */}
-                  <Link 
-                    to="/contact" 
-                    className="font-inter inline-flex items-center justify-center w-full lg:w-auto gap-3 px-6 py-4 lg:px-0 lg:py-0 bg-brand-navy lg:bg-transparent text-white lg:text-brand-navy hover:bg-brand-red lg:hover:bg-transparent lg:hover:text-brand-red text-[16px] font-semibold rounded-xl lg:rounded-none group transition-all"
-                  >
-                    Inquire About Service
-                    <ArrowRight size={18} className="lg:group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </motion.div>
-              </div>
+  return (
+    <>
+      <Helmet>
+        <title>{seoData.title}</title>
+        <meta name="description" content={seoData.description} />
+        <link rel="canonical" href={seoData.url} />
+        <script type="application/ld+json">
+          {JSON.stringify(schemaMarkup)}
+        </script>
+      </Helmet>
 
-            </motion.div>
-          ))}
-
-        </div>
-      </section>
-
-      {/* =========================================
-          3. THE VR DIZI PROMISE
-      ========================================= */}
-      {/* SECTION PADDING: 80px (py-20) */}
-      <section className="py-20 px-4 sm:px-6 bg-slate-50 border-y border-slate-100">
-        <div className="container mx-auto max-w-7xl">
+      <main className="font-inter bg-[#ffffff] pt-32 lg:pt-40 pb-16 overflow-hidden min-h-screen selection:bg-brand-red selection:text-white">
+        
+        {/* 1. PAGE HEADER */}
+        <section className="px-6 lg:px-12 mb-32 lg:mb-40" aria-label="Services Introduction">
           <motion.div 
-            initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={staggerContainer}
-            className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slate-200"
+            className="container mx-auto max-w-4xl text-center"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
           >
-            <motion.div variants={fadeUp} className="pt-8 md:pt-0 md:px-6">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm text-brand-navy">
-                <ShieldCheck size={24} />
-              </div>
-              {/* H4: Poppins | 20px | Semi-bold */}
-              <h4 className="font-poppins text-[20px] font-semibold text-brand-navy mb-2 leading-[1.3]">100% Verified Staff</h4>
-              {/* P: Inter | 14px | Line-height 1.7 */}
-              <p className="font-inter text-slate-500 text-[14px] leading-[1.7] font-normal px-4 md:px-0">Every candidate passes a strict 7-step background and behavioral check.</p>
+            <motion.div variants={fadeUp} className="inline-flex items-center justify-center gap-4 mb-8">
+              <span className="w-12 h-[1px] bg-brand-red" aria-hidden="true"></span>
+              <h1 className="font-poppins text-brand-red font-medium uppercase tracking-[0.2em] text-[12px]">Our Expertise</h1>
+              <span className="w-12 h-[1px] bg-brand-red" aria-hidden="true"></span>
             </motion.div>
-
-            <motion.div variants={fadeUp} className="pt-8 md:pt-0 md:px-6">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm text-brand-navy">
-                <Clock size={24} />
-              </div>
-              <h4 className="font-poppins text-[20px] font-semibold text-brand-navy mb-2 leading-[1.3]">48-Hour Replacement</h4>
-              <p className="font-inter text-slate-500 text-[14px] leading-[1.7] font-normal px-4 md:px-0">If a placement isn't the perfect fit, we provide a replacement within 48 hours.</p>
-            </motion.div>
-
-            <motion.div variants={fadeUp} className="pt-8 md:pt-0 md:px-6">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm text-brand-navy">
-                <Headphones size={24} />
-              </div>
-              <h4 className="font-poppins text-[20px] font-semibold text-brand-navy mb-2 leading-[1.3]">Dedicated Support</h4>
-              <p className="font-inter text-slate-500 text-[14px] leading-[1.7] font-normal px-4 md:px-0">Your personal account manager is available around the clock to assist you.</p>
-            </motion.div>
+            
+            <motion.p variants={fadeUp} className="font-poppins text-5xl sm:text-6xl md:text-[72px] font-medium text-[#111] leading-[1.1] tracking-[-0.03em] mb-8">
+              Premium Staffing <br />
+              <span className="italic font-light text-[#888]">for Every Need.</span>
+            </motion.p>
+            
+            <motion.p variants={fadeUp} className="font-inter text-[#666] text-[18px] max-w-2xl mx-auto leading-[1.8] font-light">
+              From maintaining the sanctity of your home to securing your corporate assets, VRDizi provides specialized, heavily vetted personnel tailored to your exact requirements.
+            </motion.p>
           </motion.div>
-        </div>
-      </section>
+        </section>
 
-      {/* =========================================
-          4. BOTTOM CTA
-      ========================================= */}
-      <section className="py-20 px-4 sm:px-6 bg-white text-center">
-        <motion.div 
-          initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-          className="container mx-auto max-w-2xl"
-        >
-          {/* H2: Poppins | 44px | Semi-bold */}
-          <h2 className="font-poppins text-3xl md:text-[44px] font-semibold text-brand-navy mb-6 tracking-tight leading-[1.3]">
-            Ready to secure your staff?
-          </h2>
-          {/* P: Inter | 17px | Line-height 1.7 */}
-          <p className="font-inter text-slate-500 text-[16px] md:text-[17px] mb-10 leading-[1.7] font-normal">
-            Fill out a simple inquiry form, and our placement specialists in Hyderabad will respond immediately.
-          </p>
-          {/* CTA Button: Inter | 16px | Semi-bold */}
-          <Link to="/contact" className="font-inter inline-block w-full sm:w-auto px-10 py-4 bg-brand-red text-white text-[16px] font-semibold rounded-xl hover:bg-brand-navy hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-            Start Your Request
-          </Link>
-        </motion.div>
-      </section>
+        {/* 2. SERVICES LISTING */}
+        <section className="px-6 lg:px-12 pb-32" aria-label="Detailed Service Offerings">
+          <div className="container mx-auto max-w-[1400px] flex flex-col gap-32 lg:gap-48">
+            {services.map((service, index) => (
+              <ServiceBlock key={service.id} service={service} index={index} />
+            ))}
+          </div>
+        </section>
 
-    </main>
+        {/* 3. THE VR DIZI PROMISE */}
+        <section className="py-32 px-6 lg:px-12 bg-[#fafafa]" aria-label="Our Service Guarantee">
+          <div className="container mx-auto max-w-[1200px]">
+            <motion.div 
+              initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-10%" }} variants={staggerContainer}
+              className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12 text-center"
+            >
+              {[
+                { icon: ShieldCheck, title: "100% Verified Staff", desc: "Every candidate passes a strict 7-step background and behavioral check." },
+                { icon: Clock, title: "48-Hour Replacement", desc: "If a placement isn't the perfect fit, we provide a replacement within 48 hours." },
+                { icon: Headphones, title: "Dedicated Support", desc: "Your personal account manager is available around the clock to assist you." }
+              ].map((item, i) => (
+                <motion.div key={i} variants={fadeUp} className="flex flex-col items-center">
+                  <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-8 shadow-sm text-[#111]">
+                    <item.icon size={28} strokeWidth={1.5} aria-hidden="true" />
+                  </div>
+                  <h3 className="font-poppins text-[22px] font-medium text-[#111] mb-4 leading-[1.3]">{item.title}</h3>
+                  <p className="font-inter text-[#666] text-[16px] leading-[1.8] font-light max-w-xs">{item.desc}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        {/* 4. BOTTOM CTA */}
+        <section className="py-32 px-6 lg:px-12 bg-[#111] text-center" aria-label="Call to Action">
+          <motion.div 
+            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
+            className="container mx-auto max-w-3xl"
+          >
+            <h2 className="font-poppins text-4xl md:text-[56px] font-medium text-white mb-8 tracking-[-0.02em] leading-[1.1]">
+              Ready to secure <span className="italic font-light text-white/50">your staff?</span>
+            </h2>
+            <p className="font-inter text-white/60 text-[18px] mb-12 leading-[1.8] font-light">
+              Fill out a simple inquiry form, and our placement specialists in Hyderabad will respond immediately.
+            </p>
+            <Link to="/contact" className="font-inter inline-block px-12 py-5 bg-white text-[#111] text-[15px] font-medium uppercase tracking-widest rounded-full hover:bg-brand-red hover:text-white transition-colors duration-500">
+              Start Your Request
+            </Link>
+          </motion.div>
+        </section>
+
+      </main>
+    </>
   );
 };
 
