@@ -1,11 +1,16 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import ContactForm from './ContactForm';
+
+import ContactForm, {type ContactFormData } from './ContactForm'; // Make sure ContactFormData is imported!
 
 interface ContactModalProps {
   isOpen: boolean;
   onClose: () => void;
+  // ADD THIS LINE BELOW:
+  onDataReceived?: (data: ContactFormData) => void; 
 }
+
+
 
 const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
   return (

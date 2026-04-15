@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import LOGO from "../assets/logo.png";
-import ContactModal from './ContactModal';
+
+// 1. Add the Props interface to accept the function from App.tsx
+interface NavbarProps {
+  onOpenModal?: () => void;
+}
 
 // --- Mobile Menu Animation Variants ---
 const menuOverlayVariants: Variants = {
@@ -19,10 +23,12 @@ const menuItemVariants: Variants = {
   open: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
 };
 
-const Navbar: React.FC = () => {
+// 2. Accept the prop here
+const Navbar: React.FC<NavbarProps> = ({ onOpenModal }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // NOTE: Removed local `isModalOpen` state. It is now handled globally in App.tsx
 
   // Prevent scrolling when mobile menu is open
   useEffect(() => {
@@ -142,8 +148,8 @@ const Navbar: React.FC = () => {
             </button>
           </nav>
 
-          {/* Desktop CTA Button */}
-          <button onClick={() => setIsModalOpen(true)} className="hidden sm:flex items-center hover:bg-[#00082d] bg-[#be1622] transition-all duration-300 rounded-xl p-1.5 shadow-xl group cursor-pointer border border-[#00082d]/10">
+          {/* 3. Update Desktop CTA Button to trigger onOpenModal prop */}
+          <button onClick={onOpenModal} className="hidden sm:flex items-center hover:bg-[#00082d] bg-[#be1622] transition-all duration-300 rounded-xl p-1.5 shadow-xl group cursor-pointer border border-[#00082d]/10">
             <span className="text-white font-semibold text-sm px-4 whitespace-nowrap">Get a Quote</span>
             <div className="bg-white/10 rounded-lg p-2 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-0.5">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-white">
@@ -224,7 +230,10 @@ const Navbar: React.FC = () => {
                 <button 
                   onClick={() => {
                     setIsMobileMenuOpen(false);
-                    setTimeout(() => setIsModalOpen(true), 300); // Slight delay for smooth transition
+                    // 4. Update Mobile CTA Button to trigger onOpenModal prop
+                    setTimeout(() => {
+                      if (onOpenModal) onOpenModal();
+                    }, 300); // Slight delay for smooth transition
                   }} 
                   className="w-full flex items-center justify-center gap-2 bg-[#be1622] hover:bg-white hover:text-[#00082d] transition-all text-white py-4 rounded-xl font-bold text-sm uppercase tracking-widest shadow-lg group"
                 >
@@ -237,8 +246,6 @@ const Navbar: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
-
-      <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
 };
