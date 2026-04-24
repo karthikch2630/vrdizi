@@ -109,9 +109,9 @@ const Footer: React.FC = () => {
               {/* Highlight Name: Poppins | Semi-bold */}
               <p className="font-poppins text-brand-navy font-semibold text-[16px]">VR Dizi</p>
               <p>
-                Maa Nilayam, 3rd Floor, 1-98/9/3/20<br />
-                Sy No 71, Madhapur, Serilingampally<br />
-                Hyderabad, Telangana 500081
+                HNO-5-101/162/163/2D 2ND Floor<br />
+                Balaji Nagar , Tripura Contructions<br />
+                PupplaGuda,Hyderabad, Telangana 500089
               </p>
               <div className="pt-3 flex flex-col gap-1">
                 <a href="tel:+918688995438" className="hover:text-brand-red font-medium transition-colors inline-flex items-center gap-2">

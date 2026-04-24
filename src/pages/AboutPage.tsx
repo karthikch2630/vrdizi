@@ -286,46 +286,69 @@ const AboutPage: React.FC = () => {
 
         {/* 5. LEADERSHIP */}
         <section className="py-20 px-4 sm:px-6 bg-white" aria-label="Leadership Team">
-          <div className="container mx-auto max-w-5xl">
-            <div className="flex flex-col md:flex-row items-center gap-16 lg:gap-24">
-              
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
-                className="w-full md:w-5/12"
-              >
-                <div className="relative rounded-[2rem] overflow-hidden shadow-2xl">
-                  {/* Better alt text for accessibility and context */}
-                  <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800" alt="Anuradha, Managing Partner at VR Dizi" className="w-full h-[500px] object-cover grayscale hover:grayscale-0 transition-all duration-700" />
-                </div>
-              </motion.div>
+  <div className="container mx-auto max-w-4xl text-center">
+    
+    <motion.div 
+      initial="hidden" 
+      whileInView="visible" 
+      viewport={{ once: true, margin: "-100px" }} 
+      variants={staggerContainer}
+      className="w-full"
+    >
+      <motion.h2 
+        variants={fadeUp} 
+        className="font-poppins text-brand-red font-semibold uppercase tracking-[0.3em] text-[14px] mb-4"
+      >
+        Leadership
+      </motion.h2>
 
-              <motion.div 
-                initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={staggerContainer}
-                className="w-full md:w-7/12"
-              >
-                <motion.h2 variants={fadeUp} className="font-poppins text-brand-red font-semibold uppercase tracking-[0.3em] text-[14px] mb-4">Leadership</motion.h2>
-                <motion.h3 variants={fadeUp} className="font-poppins text-[44px] leading-[1.3] text-brand-navy font-semibold mb-2">Anuradha</motion.h3>
-                <motion.p variants={fadeUp} className="font-inter text-slate-500 text-[14px] tracking-widest uppercase mb-10 font-semibold">Managing Partner, VR Dizi</motion.p>
-                
-                <motion.div variants={fadeUp} className="font-inter space-y-6 text-slate-500 text-[16px] md:text-[17px] leading-[1.7] font-normal mb-12">
-                  <p>"When we started VR Dizi, our goal was profoundly personal: to bring absolute peace of mind to your doorstep. The manpower industry is often fragmented, but we believed it needed a standard of uncompromising professionalism."</p>
-                  <p>"Whether it is caring for your aging parents, preparing your daily meals, nurturing your children, or securing your corporate office, we know that trust is the foundation of everything we do. We don't take shortcuts."</p>
-                  <p className="font-medium text-brand-navy italic">"Your family's safety and your business's security are our highest priority."</p>
-                </motion.div>
+      <motion.h3 
+        variants={fadeUp} 
+        className="font-poppins text-[42px] leading-[1.3] text-brand-navy font-semibold mb-2"
+      >
+        Anuradha
+      </motion.h3>
 
-                <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-6 pt-8 border-t border-slate-100">
-                  <a href="tel:+918688995438" className="font-inter px-8 py-4 bg-brand-navy hover:bg-brand-red text-white text-[16px] font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5">
-                    Contact Directly
-                  </a>
-                  <a href="https://www.vrdizi.com" target="_blank" rel="noreferrer" className="font-inter text-slate-500 hover:text-brand-red text-[14px] font-semibold uppercase tracking-widest transition-colors">
-                    Visit Website &rarr;
-                  </a>
-                </motion.div>
-              </motion.div>
+      <motion.p 
+        variants={fadeUp} 
+        className="font-inter text-slate-500 text-[14px] tracking-widest uppercase mb-10 font-semibold"
+      >
+        Managing Partner, VR Dizi
+      </motion.p>
 
-            </div>
-          </div>
-        </section>
+      <motion.div 
+        variants={fadeUp} 
+        className="font-inter space-y-6 text-slate-500 text-[16px] md:text-[17px] leading-[1.7] font-normal mb-12 max-w-3xl mx-auto"
+      >
+        <p>
+          "When we started VR Dizi, our goal was profoundly personal: to bring absolute peace of mind to your doorstep. The manpower industry is often fragmented, but we believed it needed a standard of uncompromising professionalism."
+        </p>
+
+        <p>
+          "Whether it is caring for your aging parents, preparing your daily meals, nurturing your children, or securing your corporate office, we know that trust is the foundation of everything we do. We don't take shortcuts."
+        </p>
+
+        <p className="font-medium text-brand-navy italic">
+          "Your family's safety and your business's security are our highest priority."
+        </p>
+      </motion.div>
+
+      <motion.div 
+        variants={fadeUp} 
+        className="flex justify-center pt-8 border-t border-slate-100"
+      >
+        <a 
+          href="tel:+918688995438" 
+          className="font-inter px-8 py-4 bg-brand-navy hover:bg-brand-red text-white text-[16px] font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+        >
+          Contact Directly
+        </a>
+      </motion.div>
+
+    </motion.div>
+
+  </div>
+</section>
 
         {/* 6. BOTTOM CTA */}
         <section className="py-20 px-4 sm:px-6 bg-white border-t border-slate-100 text-center" aria-label="Call to Action">
